@@ -61,12 +61,14 @@ var map  = require('map-stream');
 
 gulp.task('replace', function() {
     return gulp.src('src/**/*.js')
-        .pipe(map(function (file, cb) {
-            var contents = file.contents.toString('utf8');
-            contents = contents.replace(/abc/g, '123');
-            file.contents = new Buffer(contents, 'utf8');
-            cb(null, file);
-        }));
+        .pipe(function() { 
+            return map(function (file, cb) {
+                var contents = file.contents.toString('utf8');
+                contents = contents.replace(/abc/g, '123');
+                file.contents = new Buffer(contents, 'utf8');
+                cb(null, file);
+            });
+        });
 });
 ```
 
